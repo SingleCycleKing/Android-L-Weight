@@ -14,9 +14,9 @@ import android.view.MotionEvent;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.unique.singlecycle.l_weight.R;
 
-import utils.DeBugLog;
+import com.unique.singlecycle.mylibrary.R;
+
 import utils.Utils;
 
 /**

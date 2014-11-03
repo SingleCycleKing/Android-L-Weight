@@ -2,7 +2,7 @@ package utils;
 
 import android.util.Log;
 
-import com.unique.singlecycle.l_weight.BuildConfig;
+import com.unique.singlecycle.mylibrary.BuildConfig;
 
 
 public class DeBugLog {
