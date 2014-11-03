@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RectangleButton">
+        <attr name="text" format="string" />
+        <attr name="background" format="color" />
+        <attr name="rippleSpeed" format="float" />
+        <attr name="rippleSize" format="integer" />
+        <attr name="rippleColor" format="color" />
+    </declare-styleable>
+</resources>
