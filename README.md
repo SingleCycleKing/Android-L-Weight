@@ -45,8 +45,7 @@ rectangleButton.setTextColor(0xffffffff);
 rectangleButton.setRippleSpeed(20f);
 rectangleButton.setRippleSize(40);
 rectangleButton.setRippleColor(0xff000000);
-  ```
-  
+```
 ##RippleLayout
 ```xml
 <ui.RippleLayout
@@ -67,6 +66,28 @@ RippleLayout rippleLayout = (RippleLayout) findViewById(R.id.ripple_layout);
 rippleLayout.setRippleColor(0xff000000);
 rippleLayout.setRippleSize(5);
 rippleLayout.setRippleSpeed(20f);
+```
+##FloatButton
+```xml
+<ui.FloatButton 
+    android:id="@+id/float_button"
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:layout_marginBottom="50dp"
+    android:layout_width="50dp"
+    android:layout_height="50dp" />
+```
+```java
+ FloatButton floatButton = (FloatButton) findViewById(R.id.float_button);
+ floatButton.setRippleColor(0xff000000);
+ floatButton.setRippleSize(5);
+ floatButton.setRippleSpeed(20f);
+ floatButton.setDrawableIcon(getResources().getDrawable(R.drawable.add_icon));
+```
+设置进入退出动画
+```java
+ floatButton.floatButtonIn();
+ floatButton.floatButtonOut();
 ```
 ##说明
   Coder是枚大二狗，不足之处请多多指教～求star～
