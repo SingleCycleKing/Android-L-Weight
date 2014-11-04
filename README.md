@@ -7,7 +7,7 @@
   
     dependencies {
       compile project(':library')
-      }
+    }
   
   2.在xml中使用:
   
