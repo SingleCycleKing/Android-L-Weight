@@ -3,19 +3,22 @@
   1.波纹效果的Button
 
 ##使用方法
-  *将library导入，修改你的工程的gradle如下:
+  1.将library导入，修改你的工程的gradle如下:
+  
     dependencies {
       compile project(':library')
   }
   
-  *在xml中使用:
+  2.在xml中使用:
+  
      <ui.RectangleButton xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/rectangle_button"
         android:layout_width="100dp"
         android:layout_height="200dp"
         custom:text="Button" />
         
-  *也可以在你的activity中修改某些属性:
+  3.也可以在你的activity中修改某些属性:
+  
         RectangleButton rectangleButton = (RectangleButton) findViewById(R.id.rectangle_button);
         rectangleButton.setText("Button");
         rectangleButton.setTextColor(0xffffffff);
