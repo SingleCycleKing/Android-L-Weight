@@ -152,7 +152,7 @@ public class RectangleButton extends RelativeLayout {
         super.onDraw(canvas);
         if (x != -1) {
             Rect src = new Rect(0, 0, getWidth(), getHeight());
-            Rect dst = new Rect(Utils.dpToPx(0, getResources()), 0, getWidth(), getHeight());
+            Rect dst = new Rect(0, 0, getWidth(), getHeight());
             canvas.drawBitmap(makeCircle(), src, dst, null);
         }
         invalidate();

@@ -7,4 +7,11 @@
         <attr name="rippleSize" format="integer" />
         <attr name="rippleColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="RippleLayout">
+        <attr name="layout_background" format="color" />
+        <attr name="layout_rippleSpeed" format="float" />
+        <attr name="layout_rippleSize" format="integer" />
+        <attr name="layout_rippleColor" format="color" />
+    </declare-styleable>
 </resources>
