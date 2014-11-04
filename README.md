@@ -1,5 +1,5 @@
 #L-Weight
-  第三方向下支持的仿制Android5.0的控件
+  向下支持的仿制Android5.0的控件
   
   1.波纹效果的Button
   
