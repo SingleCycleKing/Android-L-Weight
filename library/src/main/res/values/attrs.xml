@@ -14,4 +14,12 @@
         <attr name="layout_rippleSize" format="integer" />
         <attr name="layout_rippleColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="FloatButton">
+        <attr name="floatButton_rippleSpeed" format="float" />
+        <attr name="floatButton_rippleSize" format="integer" />
+        <attr name="floatButton_rippleColor" format="color" />
+        <attr name="floatButton_icon" format="reference" />
+        <attr name="floatButton_background" format="reference" />
+    </declare-styleable>
 </resources>

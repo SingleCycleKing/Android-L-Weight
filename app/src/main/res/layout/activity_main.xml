@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,6 +16,7 @@
         custom:text="SingleCycle" />
 
     <ui.RippleLayout
+        android:layout_below="@+id/rectangle_button"
         android:id="@+id/ripple_layout"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -31,4 +32,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </ui.RippleLayout>
-</LinearLayout>
+
+    <ui.FloatButton xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/float_button"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        custom:floatButton_icon="@drawable/add_icon"
+        android:layout_marginBottom="50dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <Button
+        android:id="@+id/click"
+        android:text="click me"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

@@ -20,6 +20,7 @@ import utils.Utils;
  * Created by singlecycle on 11/4/14.
  */
 public class RippleLayout extends RelativeLayout {
+
     public int minWidth;
     public int minHeight;
     public int background;
