@@ -5,11 +5,11 @@
 
 ##使用方法
   1.将library导入，修改你的工程的gradle如下:
-  ```gradle
+
     dependencies {
       compile project(':library')
     }
-  ```
+
   2.在xml中使用:
   ```xml
      <ui.RectangleButton xmlns:custom="http://schemas.android.com/apk/res-auto"
