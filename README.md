@@ -9,12 +9,14 @@ L-Weight
     dependencies {
       compile project(':library')
   }
+  
   2.在xml中使用:
      <ui.RectangleButton xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:id="@+id/rectangle_button"
         android:layout_width="100dp"
         android:layout_height="200dp"
         custom:text="Button" />
+        
   3.也可以在你的activity中修改某些属性:
         RectangleButton rectangleButton = (RectangleButton) findViewById(R.id.rectangle_button);
         rectangleButton.setText("Button");
