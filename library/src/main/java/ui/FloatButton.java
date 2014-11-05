@@ -80,6 +80,9 @@ public class FloatButton extends RelativeLayout {
         if (backgroundDrawable != null) setBackground(backgroundDrawable);
     }
 
+    /**
+     * 退出动画
+     */
     public void floatButtonOut() {
         if (isBottom) {
             ObjectAnimator animator = ObjectAnimator.ofFloat(FloatButton.this, "y", getY(), getY() - 500);
@@ -90,6 +93,9 @@ public class FloatButton extends RelativeLayout {
         }
     }
 
+    /**
+     * 进入动画
+     */
     public void floatButtonIn() {
         if (!isBottom) {
             ObjectAnimator animator = ObjectAnimator.ofFloat(FloatButton.this, "y", getY(), getY() + 500);
