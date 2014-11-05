@@ -78,6 +78,8 @@ public class FloatButton extends RelativeLayout {
         addView(icon);
 
         if (backgroundDrawable != null) setBackground(backgroundDrawable);
+
+
     }
 
     /**
