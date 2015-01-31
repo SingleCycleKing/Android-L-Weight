@@ -1,6 +1,7 @@
 package ui;
 
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -16,9 +17,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.AnticipateInterpolator;
 import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -27,9 +32,6 @@ import com.unique.singlecycle.mylibrary.R;
 import utils.DeBugLog;
 import utils.Utils;
 
-/**
- * Created by singlecycle on 11/4/14.
- */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
 public class FloatButton extends RelativeLayout {
     private int sizeIcon = 24;
@@ -44,14 +46,12 @@ public class FloatButton extends RelativeLayout {
     private float x = -1, y = -1, radius = -1;
     private OnClickListener onClickListener;
     private boolean isBottom = false;
+    private boolean actionFirst = false;
 
     public FloatButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-
         setBackgroundResource(R.drawable.background_button_float);
         setDefaultProperties();
-
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.FloatButton);
         Drawable backgroundDrawable;
         try {
@@ -63,7 +63,6 @@ public class FloatButton extends RelativeLayout {
         } finally {
             array.recycle();
         }
-
         icon = new ImageView(context);
         if (drawableIcon != null) {
             try {
@@ -72,40 +71,67 @@ public class FloatButton extends RelativeLayout {
                 icon.setBackgroundDrawable(drawableIcon);
             }
         }
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(Utils.dpToPx(sizeIcon, getResources()), Utils.dpToPx(sizeIcon, getResources()));
+        LayoutParams params = new LayoutParams(Utils.dpToPx(sizeIcon, getResources()), Utils.dpToPx(sizeIcon, getResources()));
         params.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
         icon.setLayoutParams(params);
         addView(icon);
-
         if (backgroundDrawable != null) setBackground(backgroundDrawable);
-
-
     }
 
-    /**
-     * 退出动画
-     */
-    public void floatButtonOut() {
+    public void floatButtonIn() {
         if (isBottom) {
             ObjectAnimator animator = ObjectAnimator.ofFloat(FloatButton.this, "y", getY(), getY() - 500);
-            animator.setInterpolator(new BounceInterpolator());
-            animator.setDuration(1000);
+            animator.setDuration(200);
             animator.start();
             isBottom = false;
         }
     }
 
-    /**
-     * 进入动画
-     */
-    public void floatButtonIn() {
+    public void scaleFade() {
         if (!isBottom) {
-            ObjectAnimator animator = ObjectAnimator.ofFloat(FloatButton.this, "y", getY(), getY() + 500);
-            animator.setInterpolator(new BounceInterpolator());
-            animator.setDuration(1000);
+            PropertyValuesHolder propertyValuesHolderX = PropertyValuesHolder.ofFloat("scaleX", 1f, 0);
+            PropertyValuesHolder propertyValuesHolderY = PropertyValuesHolder.ofFloat("scaleY", 1f, 0);
+            Interpolator interpolator = new AnticipateInterpolator();
+            ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(FloatButton.this, propertyValuesHolderX, propertyValuesHolderY).setDuration(200);
+            animator.setInterpolator(interpolator);
             animator.start();
             isBottom = true;
         }
+    }
+
+    public void scaleAppear() {
+        if (isBottom) {
+            PropertyValuesHolder propertyValuesHolderX = PropertyValuesHolder.ofFloat("scaleX", 0, 1f);
+            PropertyValuesHolder propertyValuesHolderY = PropertyValuesHolder.ofFloat("scaleY", 0, 1f);
+            Interpolator interpolator = new DecelerateInterpolator();
+            ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(FloatButton.this, propertyValuesHolderX, propertyValuesHolderY).setDuration(200);
+            animator.setInterpolator(interpolator);
+            animator.start();
+            isBottom = false;
+        }
+    }
+
+    public void floatButtonOut() {
+        if (!isBottom) {
+            ObjectAnimator animator = ObjectAnimator.ofFloat(FloatButton.this, "y", getY(), getY() + 500);
+            animator.setDuration(200);
+            animator.start();
+            isBottom = true;
+        }
+    }
+
+    public void rotateButtonAway() {
+        if (!isBottom) {
+            ObjectAnimator rotate = ObjectAnimator.ofFloat(FloatButton.this, View.ROTATION, 0, 225);
+            rotate.setDuration(200);
+            rotate.start();
+        }
+    }
+
+    public void rotateButtonBack() {
+        ObjectAnimator rotate = ObjectAnimator.ofFloat(FloatButton.this, View.ROTATION, 225, 0);
+        rotate.setDuration(200);
+        rotate.start();
     }
 
     @SuppressLint("DrawAllocation")
@@ -114,7 +140,7 @@ public class FloatButton extends RelativeLayout {
         super.onDraw(canvas);
         if (x != -1) {
             Rect src = new Rect(0, 0, getWidth(), getHeight());
-            Rect dst = new Rect(Utils.dpToPx(1, getResources()), Utils.dpToPx(2, getResources()), getWidth() - Utils.dpToPx(1, getResources()), getHeight() - Utils.dpToPx(2, getResources()));
+            Rect dst = new Rect(0, 0, getWidth(), getHeight());
             canvas.drawBitmap(cropCircle(makeCircle()), src, dst, null);
         }
         invalidate();
@@ -127,6 +153,10 @@ public class FloatButton extends RelativeLayout {
         minHeight = sizeRadius * 2;
     }
 
+    public void setActionFirst() {
+        actionFirst = true;
+    }
+
     private Bitmap makeCircle() {
         Bitmap bitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -135,22 +165,24 @@ public class FloatButton extends RelativeLayout {
         paint.setAntiAlias(true);
         paint.setColor(rippleColor);
         canvas.drawCircle(x, y, radius, paint);
+        if (actionFirst && onClickListener != null)
+            onClickListener.onClick(this);
         if (radius > getHeight() / rippleSize || radius > getWidth() / rippleSize)
             radius += rippleSpeed;
         if (radius >= getWidth() * 1.5 && radius > getHeight() * 1.5) {
             x = -1;
             y = -1;
             radius = getHeight() / rippleSize;
-            if (onClickListener != null)
+            if (!actionFirst && onClickListener != null)
                 onClickListener.onClick(this);
         }
         return bitmap;
     }
 
     protected int makePressColor() {
-        int r = (Color.parseColor("#ffff4655") >> 16) & 0xFF;
-        int g = (Color.parseColor("#ffff4655") >> 8) & 0xFF;
-        int b = (Color.parseColor("#ffff4655")) & 0xFF;
+        int r = (Color.parseColor("#ff32be6c") >> 16) & 0xFF;
+        int g = (Color.parseColor("#ff32be6c") >> 8) & 0xFF;
+        int b = (Color.parseColor("#ff32be6c")) & 0xFF;
         r = (r - 30 < 0) ? 0 : r - 30;
         g = (g - 30 < 0) ? 0 : g - 30;
         b = (b - 30 < 0) ? 0 : b - 30;
@@ -173,19 +205,13 @@ public class FloatButton extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            radius = getHeight() / rippleSize;
-            x = event.getX();
-            y = event.getY();
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            radius = getHeight() / rippleSize;
-            x = event.getX();
-            y = event.getY();
-            if (!((event.getX() <= getWidth() && event.getX() >= 0) && (event.getY() <= getHeight() && event.getY() >= 0))) {
-                x = -1;
-                y = -1;
-            }
+        if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            x = -1;
+            y = -1;
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
+            radius = getHeight() / rippleSize;
+            x = event.getX();
+            y = event.getY();
             if ((event.getX() <= getWidth() && event.getX() >= 0) &&
                     (event.getY() <= getHeight() && event.getY() >= 0)) {
                 radius++;
@@ -234,7 +260,6 @@ public class FloatButton extends RelativeLayout {
     public void setRippleSize(int rippleSize) {
         this.rippleSize = rippleSize;
     }
-
 
     public void setRippleSpeed(float rippleSpeed) {
         this.rippleSpeed = rippleSpeed;

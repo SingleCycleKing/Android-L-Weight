@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/L-weight.iml" filepath="$PROJECT_DIR$/L-weight.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Android-L-Weight.iml" filepath="$PROJECT_DIR$/Android-L-Weight.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
     </modules>
